@@ -18,6 +18,11 @@ export * from './breadcrumb'
 export * from './pagination'
 export * from './dialog'
 export * from './tooltip'
+export * from './dropdown-menu'
+export * from './popover'
+export * from './slider'
+export * from './skeleton'
+export * from './divider'
 
 export type UniversalVueComponentName =
   | 'UvButton'
@@ -40,6 +45,11 @@ export type UniversalVueComponentName =
   | 'UvPagination'
   | 'UvDialog'
   | 'UvTooltip'
+  | 'UvDivider'
+  | 'UvSkeleton'
+  | 'UvSlider'
+  | 'UvPopover'
+  | 'UvDropdownMenu'
 
 export const componentNames: readonly UniversalVueComponentName[] = [
   'UvButton',
@@ -61,5 +71,10 @@ export const componentNames: readonly UniversalVueComponentName[] = [
   'UvBreadcrumb',
   'UvPagination',
   'UvDialog',
-  'UvTooltip'
+  'UvTooltip',
+  'UvDivider',
+  'UvSkeleton',
+  'UvSlider',
+  'UvPopover',
+  'UvDropdownMenu'
 ]

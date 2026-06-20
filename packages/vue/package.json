@@ -43,10 +43,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/universal-vue/universal-vue-components.git"
+    "url": "git+https://github.com/mikocoral05/universal-vue-components.git"
   },
   "bugs": {
-    "url": "https://github.com/universal-vue/universal-vue-components/issues"
+    "url": "https://github.com/mikocoral05/universal-vue-components/issues"
   },
-  "homepage": "https://universal-vue.dev"
+  "homepage": "https://github.com/mikocoral05/universal-vue-components#readme"
 }
