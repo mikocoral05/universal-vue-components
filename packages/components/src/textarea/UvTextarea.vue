@@ -1,0 +1,12 @@
+<script setup lang="ts">
+import { computed, useId } from 'vue'
+interface Props { modelValue?:string; id?:string; name?:string; label?:string; placeholder?:string; hint?:string; error?:string; rows?:number; maxlength?:number; showCount?:boolean; disabled?:boolean; readonly?:boolean; required?:boolean; resize?:'none'|'vertical'|'horizontal'|'both' }
+const props=withDefaults(defineProps<Props>(),{modelValue:'',rows:4,showCount:false,disabled:false,readonly:false,required:false,resize:'vertical'})
+const emit=defineEmits<{ 'update:modelValue':[value:string]; input:[event:Event]; change:[event:Event]; focus:[event:FocusEvent]; blur:[event:FocusEvent] }>()
+const generatedId=useId();const inputId=computed(()=>props.id??`uv-textarea-${generatedId}`);const hintId=computed(()=>props.hint?`${inputId.value}-hint`:undefined);const errorId=computed(()=>props.error?`${inputId.value}-error`:undefined);const describedBy=computed(()=>[hintId.value,errorId.value].filter(Boolean).join(' ')||undefined)
+function onInput(event:Event){emit('update:modelValue',(event.target as HTMLTextAreaElement).value);emit('input',event)}
+</script>
+<template><div class="uv-field"><label v-if="label" class="uv-field__label" :for="inputId">{{ label }} <span v-if="required" class="uv-field__required" aria-hidden="true">*</span></label><div class="uv-field__control uv-textarea__control" :class="{'uv-field__control--invalid':error}"><textarea :id="inputId" class="uv-field__input uv-textarea__input" :style="{resize}" :value="modelValue" :name="name" :placeholder="placeholder" :rows="rows" :maxlength="maxlength" :disabled="disabled" :readonly="readonly" :required="required" :aria-invalid="error?true:undefined" :aria-describedby="describedBy" @input="onInput" @change="emit('change',$event)" @focus="emit('focus',$event)" @blur="emit('blur',$event)"/></div><div class="uv-textarea__meta"><p v-if="hint&&!error" :id="hintId" class="uv-field__hint">{{ hint }}</p><p v-if="error" :id="errorId" class="uv-field__error" role="alert">{{ error }}</p><span v-if="showCount" class="uv-textarea__count">{{ modelValue.length }}<template v-if="maxlength"> / {{ maxlength }}</template></span></div></div></template>
+<style>
+@import '../shared.css';.uv-textarea__control{align-items:stretch}.uv-textarea__input{display:block;min-height:6rem}.uv-textarea__meta{display:flex;justify-content:space-between;gap:1rem}.uv-textarea__meta p{margin:0}.uv-textarea__count{margin-left:auto;font-size:.8125rem;color:var(--uv-color-text-muted,#64748b)}
+</style>

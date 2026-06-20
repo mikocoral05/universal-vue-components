@@ -1,0 +1,52 @@
+{
+  "name": "@universal-vue/vue",
+  "version": "0.1.0-alpha.1",
+  "description": "Accessible native Vue 3 components from Universal Vue Components.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --passWithNoTests",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\""
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "@universal-vue/components": "workspace:*",
+    "@universal-vue/tokens": "workspace:*",
+    "vue": "^3.5.19"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/universal-vue/universal-vue-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/universal-vue/universal-vue-components/issues"
+  },
+  "homepage": "https://universal-vue.dev"
+}

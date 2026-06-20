@@ -1,0 +1,22 @@
+UNIVERSAL VUE COMPONENTS - WINDOWS START
+
+1. Extract this ZIP directly into:
+   C:\My NPMJS\universal-vue-components
+
+2. Open Command Prompt in that folder.
+
+3. Run:
+   pnpm install
+   pnpm check
+   pnpm dev
+
+4. Open:
+   http://localhost:3000
+
+5. Build all packages, website, and examples:
+   pnpm build
+
+6. Create local npm tarballs after the build:
+   pnpm pack:local
+
+The project is intentionally flat inside the ZIP. There is no extra wrapper folder.

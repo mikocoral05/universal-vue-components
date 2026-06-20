@@ -1,0 +1,6 @@
+[data-uv-theme='dark'],.uv-theme-dark{
+  --uv-color-primary:#60a5fa; --uv-color-primary-hover:#93c5fd; --uv-color-primary-contrast:#07111f;
+  --uv-color-secondary:#a78bfa; --uv-color-success:#4ade80; --uv-color-warning:#fbbf24; --uv-color-danger:#f87171;
+  --uv-color-text:#e5edf8; --uv-color-text-muted:#9fb0c8; --uv-color-surface:#0f172a; --uv-color-surface-subtle:#172033;
+  --uv-color-border:#334155; --uv-color-border-strong:#64748b; --uv-color-disabled:#334155; --uv-color-overlay:rgb(2 6 23 / .76);
+}

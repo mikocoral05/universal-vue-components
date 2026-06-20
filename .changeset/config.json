@@ -1,0 +1,29 @@
+{
+  "$schema": "https://unpkg.com/@changesets/config@3.1.1/schema.json",
+  "changelog": false,
+  "commit": false,
+  "fixed": [],
+  "linked": [
+    [
+      "@universal-vue/vue",
+      "@universal-vue/elements",
+      "@universal-vue/tokens",
+      "@universal-vue/icons",
+      "@universal-vue/utilities",
+      "@universal-vue/metadata"
+    ]
+  ],
+  "access": "public",
+  "baseBranch": "main",
+  "updateInternalDependencies": "patch",
+  "ignore": [
+    "@universal-vue/website",
+    "@universal-vue/components",
+    "@universal-vue/example-vue",
+    "@universal-vue/example-nuxt",
+    "@universal-vue/example-react",
+    "@universal-vue/example-angular",
+    "@universal-vue/example-svelte",
+    "@universal-vue/example-plain-html"
+  ]
+}

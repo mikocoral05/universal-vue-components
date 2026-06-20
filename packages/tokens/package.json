@@ -1,0 +1,33 @@
+{
+  "name": "@universal-vue/tokens",
+  "version": "0.1.0-alpha.1",
+  "description": "Design tokens and themes for Universal Vue Components.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "style": "./dist/index.css",
+  "exports": {
+    ".": "./dist/index.css",
+    "./light.css": "./dist/themes/light.css",
+    "./dark.css": "./dist/themes/dark.css",
+    "./reset.css": "./dist/reset.css",
+    "./source.css": "./dist/index.css"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "node -e \"console.log('CSS-only package')\"",
+    "test": "vitest run --passWithNoTests",
+    "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\""
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

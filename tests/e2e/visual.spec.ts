@@ -1,0 +1,2 @@
+import {expect,test} from '@playwright/test'
+test.describe('visual baselines',()=>{test.skip(!process.env.VISUAL_REGRESSION,'Set VISUAL_REGRESSION=1 after creating approved baselines.');for(const route of ['/','/components','/components/button','/playground'])test(route,async({page})=>{await page.goto(route);await expect(page).toHaveScreenshot(`${route.replaceAll('/','-')||'home'}.png`,{fullPage:true,animations:'disabled'})})})

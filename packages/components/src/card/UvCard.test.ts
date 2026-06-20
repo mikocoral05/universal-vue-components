@@ -1,0 +1,1 @@
+import{mount}from'@vue/test-utils';import{describe,expect,it}from'vitest';import UvCard from'./UvCard.vue';describe('UvCard',()=>{it('renders named slots',()=>{const wrapper=mount(UvCard,{slots:{header:'Title',default:'Body',footer:'Actions'}});expect(wrapper.text()).toContain('Title');expect(wrapper.text()).toContain('Actions')})})

@@ -1,0 +1,12 @@
+<script setup lang="ts">
+import { onMounted, ref, watch } from 'vue'
+interface Props { modelValue?:boolean; name?:string; value?:string; label?:string; description?:string; disabled?:boolean; required?:boolean; indeterminate?:boolean }
+const props=withDefaults(defineProps<Props>(),{modelValue:false,disabled:false,required:false,indeterminate:false})
+const emit=defineEmits<{ 'update:modelValue':[value:boolean]; change:[event:Event] }>();const input=ref<HTMLInputElement>()
+function sync(){if(input.value)input.value.indeterminate=props.indeterminate}onMounted(sync);watch(()=>props.indeterminate,sync)
+function onChange(event:Event){emit('update:modelValue',(event.target as HTMLInputElement).checked);emit('change',event)}
+</script>
+<template><label class="uv-check" :class="{'uv-check--disabled':disabled}"><input ref="input" class="uv-check__native" type="checkbox" :checked="modelValue" :name="name" :value="value" :disabled="disabled" :required="required" @change="onChange"><span class="uv-check__box" aria-hidden="true"><span class="uv-check__mark">{{ indeterminate?'−':'✓' }}</span></span><span class="uv-check__content"><span class="uv-check__label"><slot>{{ label }}</slot></span><span v-if="description" class="uv-check__description">{{ description }}</span></span></label></template>
+<style>
+.uv-check{position:relative;display:inline-flex;align-items:flex-start;gap:.65rem;color:var(--uv-color-text,#0f172a);font-family:var(--uv-font-sans,system-ui,sans-serif);cursor:pointer}.uv-check__native{position:absolute;opacity:0;pointer-events:none}.uv-check__box{display:grid;place-items:center;flex:none;width:1.2rem;height:1.2rem;margin-top:.08rem;border:1.5px solid var(--uv-color-border-strong,#94a3b8);border-radius:.3rem;background:var(--uv-color-surface,#fff);transition:.12s}.uv-check__mark{opacity:0;color:#fff;font-size:.85rem;font-weight:900}.uv-check__native:checked+.uv-check__box,.uv-check__native:indeterminate+.uv-check__box{border-color:var(--uv-color-primary,#2563eb);background:var(--uv-color-primary,#2563eb)}.uv-check__native:checked+.uv-check__box .uv-check__mark,.uv-check__native:indeterminate+.uv-check__box .uv-check__mark{opacity:1}.uv-check__native:focus-visible+.uv-check__box{box-shadow:var(--uv-focus-ring)}.uv-check__content{display:grid;gap:.15rem}.uv-check__label{font-size:.9375rem;font-weight:600}.uv-check__description{font-size:.8125rem;color:var(--uv-color-text-muted,#64748b)}.uv-check--disabled{opacity:.55;cursor:not-allowed}
+</style>

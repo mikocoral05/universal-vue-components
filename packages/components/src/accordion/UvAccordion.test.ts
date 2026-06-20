@@ -1,0 +1,1 @@
+import{mount}from'@vue/test-utils';import{describe,expect,it}from'vitest';import UvAccordion from'./UvAccordion.vue';describe('UvAccordion',()=>{it('uses details and summary',()=>{const wrapper=mount(UvAccordion,{props:{title:'Details'},slots:{default:'Content'}});expect(wrapper.find('details').exists()).toBe(true);expect(wrapper.get('summary').text()).toContain('Details')})})

@@ -1,0 +1,1 @@
+import{mount}from'@vue/test-utils';import{describe,expect,it}from'vitest';import UvPagination from'./UvPagination.vue';describe('UvPagination',()=>{it('moves to another page',async()=>{const wrapper=mount(UvPagination,{props:{modelValue:1,totalPages:5}});await wrapper.get('[aria-label="Page 2"]').trigger('click');expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([2])})})

@@ -1,0 +1,1 @@
+{ "extends": "../../tsconfig.base.json", "include": ["src/**/*.ts", "../components/src/**/*.ts", "../components/src/**/*.vue"], "compilerOptions": { "noEmit": true } }

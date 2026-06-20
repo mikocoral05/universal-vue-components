@@ -1,0 +1,1 @@
+import{mount}from'@vue/test-utils';import{describe,expect,it}from'vitest';import UvAvatar from'./UvAvatar.vue';describe('UvAvatar',()=>{it('creates initials',()=>{const wrapper=mount(UvAvatar,{props:{name:'Universal Vue'}});expect(wrapper.text()).toContain('UV')})})

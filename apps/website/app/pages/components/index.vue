@@ -1,0 +1,8 @@
+<script setup lang="ts">
+import { components } from '@universal-vue/metadata'
+import { UvBadge } from '@universal-vue/vue'
+const query=ref('');const category=ref('All');const categories=['All',...new Set(components.map(c=>c.category))]
+const filtered=computed(()=>components.filter(c=>(category.value==='All'||c.category===category.value)&&`${c.name} ${c.description} ${c.tagName}`.toLowerCase().includes(query.value.toLowerCase())))
+useSeoMeta({title:'Components',description:'Browse the Universal Vue Components catalog and API documentation.'})
+</script>
+<template><div class="page"><div class="site-container"><header class="page-heading"><span class="eyebrow">Component catalog</span><h1>Accessible foundations for every interface.</h1><p>Every component is available as a native Vue component and a standards-based Custom Element.</p></header><div class="filter-row"><input v-model="query" type="search" placeholder="Search components" aria-label="Search components"><button v-for="item in categories" :key="item" class="filter-button" :class="{active:category===item}" type="button" @click="category=item">{{item}}</button></div><div class="card-grid"><NuxtLink v-for="component in filtered" :key="component.slug" class="component-card" :to="`/components/${component.slug}`"><div class="component-card__meta"><UvBadge tone="primary" pill>{{component.category}}</UvBadge><span class="component-card__tag">&lt;{{component.tagName}}&gt;</span></div><h2>{{component.name}}</h2><p>{{component.description}}</p><div class="component-card__footer"><span>{{component.status}}</span><span>View API →</span></div></NuxtLink></div><p v-if="!filtered.length">No components match your search.</p></div></div></template>

@@ -1,0 +1,1 @@
+import{mount}from'@vue/test-utils';import{describe,expect,it}from'vitest';import UvProgress from'./UvProgress.vue';describe('UvProgress',()=>{it('uses native progress values',()=>{const wrapper=mount(UvProgress,{props:{value:50,max:200}});expect(wrapper.get('progress').attributes('value')).toBe('50');expect(wrapper.get('progress').attributes('max')).toBe('200')})})

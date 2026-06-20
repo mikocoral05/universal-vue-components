@@ -1,0 +1,10 @@
+<script setup lang="ts">
+type RadioValue=string|number|boolean
+interface Props { modelValue?:RadioValue|null; value:RadioValue; name?:string; label?:string; description?:string; disabled?:boolean; required?:boolean }
+const props=withDefaults(defineProps<Props>(),{modelValue:null,disabled:false,required:false});const emit=defineEmits<{ 'update:modelValue':[value:RadioValue]; change:[event:Event] }>()
+function onChange(event:Event){if((event.target as HTMLInputElement).checked)emit('update:modelValue',props.value);emit('change',event)}
+</script>
+<template><label class="uv-radio" :class="{'uv-radio--disabled':disabled}"><input class="uv-radio__native" type="radio" :checked="modelValue===value" :name="name" :value="String(value)" :disabled="disabled" :required="required" @change="onChange"><span class="uv-radio__circle" aria-hidden="true"><span/></span><span class="uv-radio__content"><span class="uv-radio__label"><slot>{{ label }}</slot></span><span v-if="description" class="uv-radio__description">{{ description }}</span></span></label></template>
+<style>
+.uv-radio{position:relative;display:inline-flex;align-items:flex-start;gap:.65rem;color:var(--uv-color-text,#0f172a);font-family:var(--uv-font-sans,system-ui,sans-serif);cursor:pointer}.uv-radio__native{position:absolute;opacity:0}.uv-radio__circle{display:grid;place-items:center;flex:none;width:1.2rem;height:1.2rem;margin-top:.08rem;border:1.5px solid var(--uv-color-border-strong,#94a3b8);border-radius:50%;background:var(--uv-color-surface,#fff)}.uv-radio__circle span{width:.58rem;height:.58rem;border-radius:50%;background:var(--uv-color-primary,#2563eb);transform:scale(0);transition:.12s}.uv-radio__native:checked+.uv-radio__circle{border-color:var(--uv-color-primary,#2563eb)}.uv-radio__native:checked+.uv-radio__circle span{transform:scale(1)}.uv-radio__native:focus-visible+.uv-radio__circle{box-shadow:var(--uv-focus-ring)}.uv-radio__content{display:grid;gap:.15rem}.uv-radio__label{font-size:.9375rem;font-weight:600}.uv-radio__description{font-size:.8125rem;color:var(--uv-color-text-muted,#64748b)}.uv-radio--disabled{opacity:.55;cursor:not-allowed}
+</style>

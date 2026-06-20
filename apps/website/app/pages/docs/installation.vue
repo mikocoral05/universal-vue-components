@@ -1,0 +1,4 @@
+<script setup lang="ts">useSeoMeta({title:'Installation',description:'Install Universal Vue Components from npm.'})</script>
+<template><div class="page"><div class="site-container docs-layout"><DocsSidebar/><article class="prose"><span class="eyebrow">Getting started</span><h1>Installation</h1><p>Choose the package that matches the host application. Both public packages are intended to be published to the npm registry.</p><h2>Native Vue</h2><CodeBlock code="pnpm add @universal-vue/vue" language="bash"/><h2>Custom Elements</h2><CodeBlock code="pnpm add @universal-vue/elements" language="bash"/><h2>Theme tokens only</h2><CodeBlock code="pnpm add @universal-vue/tokens" language="bash"/><h2>Local monorepo setup</h2><CodeBlock code="pnpm install
+pnpm check
+pnpm dev" language="bash"/><p>During local development, build the package distributions before launching the website so it consumes the same export files published to npm.</p></article></div></div></template>

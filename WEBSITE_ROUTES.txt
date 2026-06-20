@@ -1,0 +1,21 @@
+Universal Vue Components — Nuxt website routes
+
+/community
+/components/[slug]
+/components
+/docs/cdn
+/docs
+/docs/installation
+/docs/vue
+/docs/web-components
+/financial-transparency
+/governance
+/
+/integrations/[framework]
+/playground/elements
+/playground
+/privacy
+/releases
+/roadmap
+/security
+/sponsors

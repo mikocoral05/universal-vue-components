@@ -1,0 +1,6 @@
+:root,[data-uv-theme='light']{
+  --uv-color-primary:#2563eb; --uv-color-primary-hover:#1d4ed8; --uv-color-primary-contrast:#fff;
+  --uv-color-secondary:#7c3aed; --uv-color-success:#15803d; --uv-color-warning:#b45309; --uv-color-danger:#dc2626;
+  --uv-color-text:#0f172a; --uv-color-text-muted:#64748b; --uv-color-surface:#fff; --uv-color-surface-subtle:#f8fafc;
+  --uv-color-border:#dbe3ef; --uv-color-border-strong:#94a3b8; --uv-color-disabled:#e2e8f0; --uv-color-overlay:rgb(15 23 42 / .58);
+}

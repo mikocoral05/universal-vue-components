@@ -1,0 +1,1 @@
+import{mount}from'@vue/test-utils';import{describe,expect,it}from'vitest';import UvBreadcrumb from'./UvBreadcrumb.vue';describe('UvBreadcrumb',()=>{it('marks the current page',()=>{const wrapper=mount(UvBreadcrumb,{props:{items:[{label:'Home',href:'/'},{label:'Current'}]}});expect(wrapper.get('[aria-current=page]').text()).toBe('Current')})})
