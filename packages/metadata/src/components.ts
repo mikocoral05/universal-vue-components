@@ -173,7 +173,87 @@ export const components: ComponentMetadata[] = [
     accessibility: ['Uses role=tooltip.', 'Connects the trigger with aria-describedby.'],
     props: [{ name: 'text', type: 'string', required: true, description: 'Tooltip text.' }, { name: 'placement', type: "'top' | 'bottom' | 'left' | 'right'", default: "'top'", description: 'Preferred placement.' }],
     events: [], slots: [{ name: 'default', description: 'Tooltip trigger.' }], cssVariables: baseCss
+  },
+  {
+    name: 'UvDivider', slug: 'divider', tagName: 'uv-divider', category: 'Data display', status: 'alpha', versionIntroduced: '0.2.0-alpha.1',
+    description: 'Semantic horizontal or vertical separator with optional inset and text label.',
+    accessibility: ['Uses separator semantics and exposes orientation.', 'Supports a decorative mode that is hidden from assistive technology.'],
+    props: [
+      { name: 'orientation', type: "'horizontal' | 'vertical'", default: "'horizontal'", description: 'Divider direction.' },
+      { name: 'label', type: 'string', description: 'Optional horizontal divider label.' },
+      { name: 'inset', type: 'boolean', default: 'false', description: 'Adds surrounding inset space.' },
+      { name: 'decorative', type: 'boolean', default: 'false', description: 'Removes semantic separator meaning.' }
+    ], events: [], slots: [], cssVariables: baseCss
+  },
+  {
+    name: 'UvSkeleton', slug: 'skeleton', tagName: 'uv-skeleton', category: 'Feedback', status: 'alpha', versionIntroduced: '0.2.0-alpha.1',
+    description: 'Responsive loading placeholder with text, rectangular, and circular variants.',
+    accessibility: ['Announces a configurable loading status.', 'Respects reduced-motion preferences.'],
+    props: [
+      { name: 'variant', type: "'text' | 'rectangular' | 'circular'", default: "'text'", description: 'Placeholder shape.' },
+      { name: 'width', type: 'string | number', default: "'100%'", description: 'Rendered width.' },
+      { name: 'height', type: 'string | number', description: 'Rendered height.' },
+      { name: 'lines', type: 'number', default: '1', description: 'Number of text placeholders.' },
+      { name: 'animated', type: 'boolean', default: 'true', description: 'Enables the shimmer animation.' },
+      { name: 'label', type: 'string', default: "'Loading content'", description: 'Screen-reader status text.' }
+    ], events: [], slots: [], cssVariables: baseCss
+  },
+  {
+    name: 'UvSlider', slug: 'slider', tagName: 'uv-slider', category: 'Forms', status: 'alpha', versionIntroduced: '0.2.0-alpha.1',
+    description: 'Accessible native range slider with labels, hints, formatted values, and size variants.',
+    accessibility: ['Uses a native range input and keyboard behavior.', 'Associates labels and hints and can expose formatted value text.'],
+    props: [
+      { name: 'modelValue', type: 'number', default: '0', description: 'Current numeric value.' },
+      { name: 'min', type: 'number', default: '0', description: 'Minimum value.' },
+      { name: 'max', type: 'number', default: '100', description: 'Maximum value.' },
+      { name: 'step', type: 'number', default: '1', description: 'Allowed value increment.' },
+      { name: 'label', type: 'string', description: 'Visible field label.' },
+      { name: 'showValue', type: 'boolean', default: 'false', description: 'Displays the current value.' },
+      { name: 'valueSuffix', type: 'string', description: 'Suffix used for visible and accessible formatted values.' }
+    ],
+    events: [
+      { name: 'update:modelValue', payload: 'number', description: 'Current-value update.' },
+      { name: 'input', payload: '[number, Event]', description: 'Emitted during interaction.' },
+      { name: 'change', payload: '[number, Event]', description: 'Emitted when the value is committed.' }
+    ], slots: [], cssVariables: baseCss
+  },
+  {
+    name: 'UvPopover', slug: 'popover', tagName: 'uv-popover', category: 'Overlays', status: 'alpha', versionIntroduced: '0.2.0-alpha.1',
+    description: 'Controlled non-modal popover with accessible trigger, placement, Escape, and outside-click behavior.',
+    accessibility: ['Trigger exposes aria-haspopup and expanded state.', 'Escape closes the panel and returns focus to the trigger.'],
+    props: [
+      { name: 'modelValue', type: 'boolean', default: 'false', description: 'Open state.' },
+      { name: 'triggerLabel', type: 'string', default: "'Open popover'", description: 'Fallback trigger label.' },
+      { name: 'ariaLabel', type: 'string', default: "'Popover'", description: 'Accessible name for the panel.' },
+      { name: 'placement', type: "'top' | 'bottom' | 'left' | 'right'", default: "'bottom'", description: 'Preferred panel placement.' },
+      { name: 'closeOnEscape', type: 'boolean', default: 'true', description: 'Allows Escape dismissal.' },
+      { name: 'closeOnOutside', type: 'boolean', default: 'true', description: 'Allows outside-pointer dismissal.' }
+    ],
+    events: [
+      { name: 'update:modelValue', payload: 'boolean', description: 'Open-state update.' },
+      { name: 'open', payload: 'void', description: 'Emitted when opening is requested.' },
+      { name: 'close', payload: 'void', description: 'Emitted when closing is requested.' }
+    ],
+    slots: [{ name: 'trigger', description: 'Trigger content.' }, { name: 'default', description: 'Popover content with a close slot prop.' }], cssVariables: baseCss
+  },
+  {
+    name: 'UvDropdownMenu', slug: 'dropdown-menu', tagName: 'uv-dropdown-menu', category: 'Overlays', status: 'alpha', versionIntroduced: '0.2.0-alpha.1',
+    description: 'Framework-neutral action menu with slotted items, keyboard navigation, and four aligned placements.',
+    accessibility: ['Uses menu and menuitem semantics.', 'Supports Arrow keys, Home, End, Escape, and focus restoration.'],
+    props: [
+      { name: 'modelValue', type: 'boolean', default: 'false', description: 'Open state.' },
+      { name: 'label', type: 'string', default: "'Menu'", description: 'Fallback trigger label.' },
+      { name: 'placement', type: "'bottom-start' | 'bottom-end' | 'top-start' | 'top-end'", default: "'bottom-start'", description: 'Menu alignment.' },
+      { name: 'closeOnSelect', type: 'boolean', default: 'true', description: 'Closes after a menu item is selected.' },
+      { name: 'ariaLabel', type: 'string', default: "'Actions'", description: 'Accessible menu name.' }
+    ],
+    events: [
+      { name: 'update:modelValue', payload: 'boolean', description: 'Open-state update.' },
+      { name: 'select', payload: 'Event', description: 'Emitted after an item is selected.' }
+    ],
+    slots: [{ name: 'trigger', description: 'Trigger content.' }, { name: 'default', description: 'Buttons, links, or elements with role=menuitem.' }], cssVariables: baseCss
   }
+
 ]
 
 export const componentBySlug = Object.fromEntries(components.map((component) => [component.slug, component])) as Record<string, ComponentMetadata>

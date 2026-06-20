@@ -1,3 +1,32 @@
 Universal Vue Components — implemented components
 
+Foundation batch (20)
+- UvButton
+- UvIconButton
+- UvInput
+- UvTextarea
+- UvCheckbox
+- UvRadio
+- UvSwitch
+- UvBadge
+- UvAlert
+- UvSpinner
+- UvSelect
+- UvCard
+- UvProgress
+- UvAvatar
+- UvAccordion
+- UvTabs
+- UvBreadcrumb
+- UvPagination
+- UvDialog
+- UvTooltip
 
+Expansion batch 1 (5)
+- UvDivider
+- UvSkeleton
+- UvSlider
+- UvPopover
+- UvDropdownMenu
+
+Total implemented: 25

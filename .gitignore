@@ -13,3 +13,13 @@ artifacts/
 .env
 .env.*
 !.env.example
+
+# Generated framework caches
+.angular/
+*.tsbuildinfo
+
+# Local test output
+*-output.txt
+test-results/
+playwright-report/
+artifacts/

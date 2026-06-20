@@ -1,26 +1,36 @@
-Universal Vue Components — validation report
+Universal Vue Components — expansion validation report
 Date: 2026-06-20
 
-PASSED
+PASSED IN THE ARTIFACT ENVIRONMENT
 - Flat monorepo structure validation
-- All 15 package.json files parse as JSON
-- GitHub workflow and issue-form YAML parsing
-- JavaScript and MJS syntax checks
-- TypeScript syntax parsing for 77 files
-- Vue script syntax parsing for 47 script blocks
-- Vue template lexical/tag validation for 48 SFC files
-- CSS syntax parsing for 28 CSS/style blocks
-- Relative import resolution for 136 source files
-- Metadata coverage for all 20 implemented components
-- Native Vue export coverage for all 20 components
-- Custom Element registration coverage for all 20 components
-- Workspace package-boundary validation
+- All package.json files parse as JSON
+- Metadata coverage for all 25 implemented components
+- Native Vue export coverage for all 25 components
+- Custom Element registration coverage for all 25 components
+- Public package entry-point and declaration validation
+- Vue SFC script, template, and style compilation for 53 files
+- Type checking for the components, native Vue, Elements, and metadata packages
+- 25 component test files and 33 unit tests
+- Native Vue production bundle and rolled-up declaration build
+- Elements ESM/CommonJS production bundle and rolled-up declaration build
+- Browser CDN bundle build
+- Vue, React, Svelte, and plain HTML consumer production builds
+- Runtime registration of all five new Custom Elements in a browser-like DOM
+- Popover and Dropdown Menu internal interaction without a Vue host
+- Bundle budgets: Vue 84,810 / 180,000 bytes; Elements 613,631 / 700,000 bytes
 
-NOT EXECUTED IN THIS ARTIFACT ENVIRONMENT
-- pnpm install
-- Nuxt/Vite production compilation
-- Vitest, Playwright, axe, and visual-regression execution
-- npm package publication
-- GitHub push and deployment
+NOT EXECUTED FOR THIS EXPANSION BATCH
+- Full pnpm workspace check using the repository lockfile
+- Nuxt documentation website production build
+- Nuxt documentation/example and Angular fixture production builds through pnpm
+- Playwright browser, accessibility, visual, and packed-tarball tests
+- npm publication and deployment
 
-Reason: the artifact environment cannot resolve registry.npmjs.org. Run pnpm install, pnpm check, pnpm build, and pnpm test:packed on the target machine before publishing.
+Run the full release gate on the target Windows machine before merging or publishing:
+pnpm check
+pnpm build
+pnpm test:e2e
+pnpm test:a11y
+pnpm test:packed
+pnpm validate:links
+pnpm validate:sizes

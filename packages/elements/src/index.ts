@@ -11,12 +11,17 @@ import {
   UvCard,
   UvCheckbox,
   UvDialog,
+  UvDivider,
+  UvDropdownMenu,
   UvIconButton,
   UvInput,
   UvPagination,
+  UvPopover,
   UvProgress,
   UvRadio,
   UvSelect,
+  UvSkeleton,
+  UvSlider,
   UvSpinner,
   UvSwitch,
   UvTabs,
@@ -46,6 +51,11 @@ export const UvBreadcrumbElement: UniversalVueElementConstructor = defineCustomE
 export const UvPaginationElement: UniversalVueElementConstructor = defineCustomElement(UvPagination) as unknown as UniversalVueElementConstructor
 export const UvDialogElement: UniversalVueElementConstructor = defineCustomElement(UvDialog) as unknown as UniversalVueElementConstructor
 export const UvTooltipElement: UniversalVueElementConstructor = defineCustomElement(UvTooltip) as unknown as UniversalVueElementConstructor
+export const UvDividerElement: UniversalVueElementConstructor = defineCustomElement(UvDivider) as unknown as UniversalVueElementConstructor
+export const UvSkeletonElement: UniversalVueElementConstructor = defineCustomElement(UvSkeleton) as unknown as UniversalVueElementConstructor
+export const UvSliderElement: UniversalVueElementConstructor = defineCustomElement(UvSlider) as unknown as UniversalVueElementConstructor
+export const UvPopoverElement: UniversalVueElementConstructor = defineCustomElement(UvPopover) as unknown as UniversalVueElementConstructor
+export const UvDropdownMenuElement: UniversalVueElementConstructor = defineCustomElement(UvDropdownMenu) as unknown as UniversalVueElementConstructor
 
 export const elementDefinitions: ReadonlyArray<readonly [string, UniversalVueElementConstructor]> = [
   ['uv-button', UvButtonElement],
@@ -67,7 +77,12 @@ export const elementDefinitions: ReadonlyArray<readonly [string, UniversalVueEle
   ['uv-breadcrumb', UvBreadcrumbElement],
   ['uv-pagination', UvPaginationElement],
   ['uv-dialog', UvDialogElement],
-  ['uv-tooltip', UvTooltipElement]
+  ['uv-tooltip', UvTooltipElement],
+  ['uv-divider', UvDividerElement],
+  ['uv-skeleton', UvSkeletonElement],
+  ['uv-slider', UvSliderElement],
+  ['uv-popover', UvPopoverElement],
+  ['uv-dropdown-menu', UvDropdownMenuElement]
 ]
 
 export function registerAll(): void {
