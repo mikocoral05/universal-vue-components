@@ -4,9 +4,6 @@ dist/
 .nuxt/
 .data/
 coverage/
-playwright-report/
-test-results/
-artifacts/
 *.tgz
 *.log
 .DS_Store
@@ -16,10 +13,20 @@ artifacts/
 
 # Generated framework caches
 .angular/
+.cache/
+.pnpm-store/
+.turbo/
+.vercel/
+.vite/
 *.tsbuildinfo
+.eslintcache
 
 # Local test output
 *-output.txt
 test-results/
 playwright-report/
 artifacts/
+
+# Local recovery archives and generated batch transcripts
+/*.zip
+/VALIDATION_REPORT_BATCH_*.txt

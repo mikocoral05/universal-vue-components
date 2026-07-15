@@ -7,15 +7,69 @@
   <script type="module" src="/main.js"></script>
 </head>
 <body>
-  <main>
+  <main id="fixture-main">
     <h1>Plain HTML fixture</h1>
     <uv-alert title="No framework">This page uses browser Custom Elements.</uv-alert>
     <uv-input label="Project name"></uv-input>
     <uv-slider label="Coverage" model-value="82" value-suffix="%" show-value></uv-slider>
+    <uv-combobox id="framework" label="Framework" model-value="html"></uv-combobox>
+    <uv-date-picker label="Release date" model-value="2026-07-01" locale="en-US"></uv-date-picker>
+    <uv-number-input label="Replicas" model-value="3" min="1" max="10"></uv-number-input>
+    <uv-rating label="Documentation quality" model-value="4" show-value></uv-rating>
+    <uv-tag-input id="package-tags" label="Tags"></uv-tag-input>
+    <uv-form-field label="Repository URL" hint="A native input stays in light DOM." for-id="html-repository"><input id="html-repository" value="https://github.com/universal-vue/components"></uv-form-field>
+    <uv-fieldset legend="Outputs" layout="inline"><label><input type="checkbox" checked> Elements</label><label><input type="checkbox" checked> CDN</label></uv-fieldset>
+    <uv-stepper id="batch-stepper" model-value="integrate"></uv-stepper>
+    <uv-command-palette id="fixture-commands" mode="inline"></uv-command-palette>
+    <uv-timeline id="fixture-timeline" label="Plain HTML integration"></uv-timeline>
+    <uv-calendar model-value="2026-06-20" locale="en-US"></uv-calendar>
+    <uv-file-upload label="Package artifact" accept=".zip,.tgz"></uv-file-upload>
+    <uv-table id="batch-table" caption="Batch 04 components" selectable></uv-table>
+    <uv-toast id="fixture-toast" position="inline"></uv-toast>
     <uv-divider label="Actions"></uv-divider>
     <uv-popover trigger-label="Why universal?">The same package works without a frontend framework.</uv-popover>
     <uv-button variant="primary">Save</uv-button>
+    <uv-button id="open-drawer" variant="outline">Open drawer</uv-button>
+    <uv-drawer id="fixture-drawer" title="Plain HTML drawer" description="Controlled with standard DOM properties.">No framework adapter is required.</uv-drawer>
+
+    <uv-empty-state title="No saved presets" description="Create a preset to continue." tone="info"><uv-button size="sm">Create preset</uv-button></uv-empty-state>
+    <uv-toolbar label="Editor actions"><uv-button size="sm" variant="ghost">Bold</uv-button><uv-button size="sm" variant="ghost">Italic</uv-button></uv-toolbar>
+    <uv-sidebar label="HTML navigation"><a href="#components">Components</a><br><a href="#guides">Guides</a></uv-sidebar>
+    <uv-tree-view label="Component tree" nodes-json='[{"id":"forms","label":"Forms","children":[{"id":"input","label":"Input"}]}]' expanded-json='["forms"]'></uv-tree-view>
+    <uv-carousel label="Distribution formats" items-json='[{"id":1,"title":"Native Vue"},{"id":2,"title":"Custom Elements"}]'></uv-carousel>
+    <uv-search-input label="Search components" model-value="button"></uv-search-input>
+    <uv-password-input label="Package token" show-strength></uv-password-input>
+    <uv-otp-input label="Verification code" length="4"></uv-otp-input>
+    <uv-color-picker label="Brand color" swatches-json='["#2563eb","#7c3aed"]'></uv-color-picker>
+    <uv-range-slider label="Coverage range" values-json="[20,80]"></uv-range-slider>
+
+    <uv-toggle label="Pin component" model-value="true"></uv-toggle>
+    <uv-toggle-group label="Formatting" multiple options-json='[{"label":"Bold","value":"bold"},{"label":"Italic","value":"italic"}]'></uv-toggle-group>
+    <uv-segmented-control label="Layout" model-value="grid" options-json='[{"label":"Grid","value":"grid"},{"label":"List","value":"list"}]'></uv-segmented-control>
+    <uv-button-group label="History" attached><uv-button variant="outline">Undo</uv-button><uv-button variant="outline">Redo</uv-button></uv-button-group>
+    <uv-split-button label="Save" items-json='[{"id":"copy","label":"Save a copy"}]'></uv-split-button>
+
+    <uv-link href="https://github.com" target="_blank" external>Repository</uv-link>
+    <uv-skip-link href="#fixture-main"></uv-skip-link>
+    <uv-navigation-menu label="Fixture navigation" items-json='[{"id":"components","label":"Components","href":"#components"},{"id":"guides","label":"Guides","children":[{"id":"install","label":"Install","href":"#install"}]}]'></uv-navigation-menu>
+    <uv-menubar label="Fixture menu" items-json='[{"id":"file","label":"File","children":[{"id":"new","label":"New"}]}]'></uv-menubar>
+    <uv-bottom-navigation model-value="home" label="Destinations" items-json='[{"id":"home","label":"Home","icon":"⌂"},{"id":"search","label":"Search","icon":"⌕"}]'></uv-bottom-navigation>
+
+    <uv-alert-dialog title="Delete item?" description="This cannot be undone." danger></uv-alert-dialog>
+    <uv-hover-card><button slot="trigger" type="button">Maintainer</button>Universal Vue team</uv-hover-card>
+    <uv-collapsible title="Package details">All targets share one source.</uv-collapsible>
+    <uv-scroll-area label="Release log" max-height="7rem"><p>Entry 1</p><p>Entry 2</p><p>Entry 3</p><p>Entry 4</p></uv-scroll-area>
+    <uv-aspect-ratio ratio="16/9" label="Preview"><div style="height:100%;display:grid;place-items:center;background:#dbeafe">16:9</div></uv-aspect-ratio>
+
+    <uv-description-list label="Package details" bordered items-json='[{"term":"Package","description":"@universal-vue/vue"},{"term":"License","description":"MIT"}]'></uv-description-list>
+    <uv-stat label="Components" value="70" trend="5" trend-direction="up" trend-label="this batch"></uv-stat>
+    <uv-code-block code="import { UvButton } from '@universal-vue/vue'" language="ts" line-numbers></uv-code-block>
+    <uv-listbox multiple searchable label="Frameworks" options-json='[{"label":"Vue","value":"vue"},{"label":"React","value":"react"}]'></uv-listbox>
+    <uv-transfer-list items-json='[{"id":"vue","label":"Vue"},{"id":"react","label":"React"}]' values-json='["vue"]' source-label="Available" target-label="Enabled"></uv-transfer-list>
+
+    <section id="generated-components" aria-label="Batches 11 through 1000 Custom Elements"></section>
+
   </main>
-  <style>body{font-family:system-ui;background:#f8fafc}main{display:grid;gap:1rem;max-width:600px;margin:4rem auto;padding:2rem;background:white;border-radius:1rem}</style>
+  <style>body{font-family:system-ui;background:#f8fafc}main{display:grid;gap:1rem;max-width:720px;margin:4rem auto;padding:2rem;background:white;border-radius:1rem}</style>
 </body>
 </html>

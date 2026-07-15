@@ -1,0 +1,36 @@
+git branch --show-current -- exit=0
+git status --short -- exit=0
+git diff --check -- exit=0
+git diff --stat -- exit=0
+node --version -- exit=0
+pnpm --version -- exit=0
+pnpm install --frozen-lockfile -- exit=0
+pnpm exec playwright install chromium -- exit=0
+pnpm validate:workspace -- exit=0
+pnpm validate:metadata -- exit=0
+pnpm build:packages -- exit=134
+pnpm lint -- exit=1
+pnpm typecheck -- exit=134
+pnpm test -- exit=1
+pnpm lint -- exit=1
+pnpm typecheck -- exit=134
+pnpm test -- exit=1
+pnpm validate:exports -- exit=0
+pnpm build:website -- exit=134
+pnpm build:examples -- exit=1
+pnpm test:e2e -- exit=1
+pnpm test:a11y -- exit=1
+pnpm test:packed -- exit=1
+pnpm validate:links -- exit=-1073741510
+pnpm validate:sizes -- exit=-1073741510
+pnpm check -- exit=-1073741510
+pnpm build -- exit=-1073741510
+final git diff --check -- exit=130
+final git status --short -- exit=0
+
+============================================================
+FINAL RESULTS
+============================================================
+Passed: 12
+Failed: 17
+Completed: 22/06/2026 18:14:02.56

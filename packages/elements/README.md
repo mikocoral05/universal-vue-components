@@ -11,13 +11,21 @@ import '@universal-vue/elements/style.css'
 registerAll()
 ```
 
+Primitive values use normal HTML attributes. Complex component data can be assigned as a DOM property or supplied through the documented JSON fallback attributes.
+
 ```html
-<uv-slider label="Coverage" model-value="72" value-suffix="%" show-value></uv-slider>
-<uv-divider label="Actions"></uv-divider>
-<uv-popover trigger-label="Why universal?">Works in any standards-based frontend.</uv-popover>
-<uv-dropdown-menu label="More actions">
-  <button type="button" role="menuitem">Preview</button>
-</uv-dropdown-menu>
+<uv-form-field label="Repository URL" for-id="repository">
+  <input id="repository" value="https://github.com/universal-vue/components">
+</uv-form-field>
+<uv-stepper
+  model-value="integrate"
+  steps-json='[{"id":"install","label":"Install"},{"id":"integrate","label":"Integrate"}]'>
+</uv-stepper>
+<uv-command-palette
+  mode="inline"
+  commands-json='[{"id":"docs","label":"Open documentation"}]'>
+</uv-command-palette>
+<uv-timeline items-json='[{"id":1,"title":"Elements registered","status":"success"}]'></uv-timeline>
 ```
 
 CDN after publication:

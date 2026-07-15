@@ -1,32 +1,47 @@
-Universal Vue Components — expansion validation report
+Universal Vue Components — Batch 04 validation report
 Date: 2026-06-20
+Branch target: feature/components-batch-04
+Base requirement: apply only after Batch 03 is extracted, validated, committed, and merged
 
-PASSED IN THE ARTIFACT ENVIRONMENT
-- Flat monorepo structure validation
-- All package.json files parse as JSON
-- Metadata coverage for all 25 implemented components
-- Native Vue export coverage for all 25 components
-- Custom Element registration coverage for all 25 components
-- Public package entry-point and declaration validation
-- Vue SFC script, template, and style compilation for 53 files
-- Type checking for the components, native Vue, Elements, and metadata packages
-- 25 component test files and 33 unit tests
-- Native Vue production bundle and rolled-up declaration build
-- Elements ESM/CommonJS production bundle and rolled-up declaration build
-- Browser CDN bundle build
-- Vue, React, Svelte, and plain HTML consumer production builds
-- Runtime registration of all five new Custom Elements in a browser-like DOM
-- Popover and Dropdown Menu internal interaction without a Vue host
-- Bundle budgets: Vue 84,810 / 180,000 bytes; Elements 613,631 / 700,000 bytes
+BATCH 04 COMPONENTS
+- UvFormField
+- UvFieldset
+- UvStepper
+- UvCommandPalette
+- UvTimeline
 
-NOT EXECUTED FOR THIS EXPANSION BATCH
-- Full pnpm workspace check using the repository lockfile
-- Nuxt documentation website production build
-- Nuxt documentation/example and Angular fixture production builds through pnpm
-- Playwright browser, accessibility, visual, and packed-tarball tests
-- npm publication and deployment
+PASSED IN THIS ARTIFACT ENVIRONMENT
+- Workspace structure validation
+- Metadata validation for all 40 implemented components
+- 40 unique native component names
+- 40 unique Custom Element tag registrations
+- Five complete Batch 04 source folders with component, types, index, and unit-test files
+- 40 total component unit-test files present
+- pnpm-workspace.yaml confirmed byte-for-byte unmodified
+- Cross-surface integration checks for native Vue, Vue plugin, Elements/CDN registry, metadata, website demos, Custom Element playground, all supported framework fixtures, E2E routes, accessibility routes, and packed-package consumer fixtures
+- Vue template compilation for all five Batch 04 components and eight changed Vue integration surfaces
+- Strict extracted-script TypeScript checking for all five Batch 04 components
+- React fixture TypeScript checking
+- Angular fixture TypeScript checking
+- Svelte fixture compilation
+- TypeScript syntax parsing for 38 changed TypeScript, TSX, and Vue script sources
+- JavaScript syntax checking for plain-HTML and validation scripts
+- package.json JSON parsing across the repository
+- Source inventory refresh
 
-Run the full release gate on the target Windows machine before merging or publishing:
+NOT EXECUTED IN THIS ARTIFACT ENVIRONMENT
+- pnpm check
+- pnpm build
+- pnpm test:e2e
+- pnpm test:a11y
+- pnpm test:packed
+- pnpm validate:links
+- pnpm validate:sizes
+- Optional visual-regression suite
+
+The complete pnpm gate could not run here because pnpm is unavailable and the uploaded project archive contains partial Windows-generated dependency folders rather than a complete portable Linux dependency installation. The component, framework, and syntax validations above used the portable compiler files that were available in the archive.
+
+RUN ON THE TARGET WINDOWS CHECKOUT BEFORE MERGING OR PUBLISHING
 pnpm check
 pnpm build
 pnpm test:e2e
@@ -34,3 +49,11 @@ pnpm test:a11y
 pnpm test:packed
 pnpm validate:links
 pnpm validate:sizes
+
+RECOMMENDED GIT FLOW
+1. Finish validating and merging Batch 03.
+2. Update the local main branch.
+3. Create feature/components-batch-04 from the updated main branch.
+4. Extract this flat patch into the repository root.
+5. Run every command above separately and fix any real failure.
+6. Commit, push, review, and merge Batch 04 only after all required gates pass.

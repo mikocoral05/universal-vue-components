@@ -1,0 +1,23 @@
+Universal Vue Component Library — Reconciled Recovery Workspace
+
+Recovered public catalog:
+- 3880 components with source, tests, exports, registrations, metadata, demos, fixtures, and browser routes
+- Generated history represented through Batch 1000, with unavailable batches explicitly excluded
+
+Unavailable implementations:
+- Batches 397 through 623 (1135 orphan records removed)
+- Batch 671 (5 orphan records removed)
+- Batch 623 could not be reconstructed confidently
+- Batches 1001 through 2000 were never generated
+
+Initial mismatch:
+- Component source directories: 3881 (3880 component directories plus _generated)
+- Metadata records: 5020
+
+Final catalog:
+- Public components: 3880
+- Metadata records: 3880
+- Removed orphan references: 1140
+
+Do not publish until the full validation gate passes.
+Do not modify pnpm-workspace.yaml.

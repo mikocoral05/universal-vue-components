@@ -1,0 +1,16 @@
+{
+  "available_generated_history": "through Batch 1000",
+  "initial_component_directories": 3881,
+  "initial_metadata_records": 5020,
+  "final_public_components": 3880,
+  "removed_orphan_records": 1140,
+  "unavailable_implementation_batches": [
+    "397-623",
+    "671"
+  ],
+  "batch_623_recoverable": false,
+  "ungenerated_batches": [
+    "1001-2000"
+  ],
+  "status": "catalog reconciled; validation required before release"
+}

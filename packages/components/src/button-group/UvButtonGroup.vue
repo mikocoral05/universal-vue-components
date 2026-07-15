@@ -1,0 +1,7 @@
+<script setup lang="ts">
+import type { UvButtonGroupOrientation } from './button-group.types'
+interface Props { label?:string; orientation?:UvButtonGroupOrientation; attached?:boolean; disabled?:boolean }
+withDefaults(defineProps<Props>(),{label:'Button group',orientation:'horizontal',attached:false,disabled:false})
+</script>
+<template><div class="uv-button-group" :class="[`uv-button-group--${orientation}`,{'uv-button-group--attached':attached}]" role="group" :aria-label="label" :aria-disabled="disabled||undefined"><slot /></div></template>
+<style>.uv-button-group{display:inline-flex;gap:.5rem;align-items:center}.uv-button-group--vertical{flex-direction:column;align-items:stretch}.uv-button-group--attached{gap:0}.uv-button-group--attached>:slotted(*){border-radius:0!important;margin-inline-start:-1px}.uv-button-group--horizontal.uv-button-group--attached>:slotted(:first-child){border-radius:var(--uv-radius-md,.625rem) 0 0 var(--uv-radius-md,.625rem)!important;margin-inline-start:0}.uv-button-group--horizontal.uv-button-group--attached>:slotted(:last-child){border-radius:0 var(--uv-radius-md,.625rem) var(--uv-radius-md,.625rem) 0!important}.uv-button-group--vertical.uv-button-group--attached>:slotted(:first-child){border-radius:var(--uv-radius-md,.625rem) var(--uv-radius-md,.625rem) 0 0!important}.uv-button-group--vertical.uv-button-group--attached>:slotted(:last-child){border-radius:0 0 var(--uv-radius-md,.625rem) var(--uv-radius-md,.625rem)!important}</style>

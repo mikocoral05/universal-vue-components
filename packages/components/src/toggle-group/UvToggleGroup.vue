@@ -1,0 +1,15 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import type { UvToggleGroupDetail,UvToggleGroupOption,UvToggleGroupValue } from './toggle-group.types'
+interface Props { modelValue?:UvToggleGroupValue|UvToggleGroupValue[]; options?:UvToggleGroupOption[]; optionsJson?:string; multiple?:boolean; label?:string; orientation?:'horizontal'|'vertical'; disabled?:boolean }
+const props=withDefaults(defineProps<Props>(),{modelValue:undefined,options:()=>[],optionsJson:'',multiple:false,label:'Toggle options',orientation:'horizontal',disabled:false})
+const emit=defineEmits<{ 'update:modelValue':[value:UvToggleGroupValue|UvToggleGroupValue[]]; change:[detail:UvToggleGroupDetail] }>()
+function parse(){try{const v=JSON.parse(props.optionsJson);return Array.isArray(v)?v:[]}catch{return[]}}
+const items=computed<UvToggleGroupOption[]>(()=>props.options.length?props.options:parse())
+const active=ref(0)
+function selected(value:UvToggleGroupValue){return Array.isArray(props.modelValue)?props.modelValue.includes(value):props.modelValue===value}
+function choose(option:UvToggleGroupOption,index:number){if(props.disabled||option.disabled)return;active.value=index;let value:UvToggleGroupValue|UvToggleGroupValue[]=option.value;if(props.multiple){const current=Array.isArray(props.modelValue)?[...props.modelValue]:[];value=selected(option.value)?current.filter(v=>v!==option.value):[...current,option.value]}emit('update:modelValue',value);emit('change',{value,option})}
+function move(event:KeyboardEvent,index:number){const keys=props.orientation==='vertical'?['ArrowDown','ArrowUp']:['ArrowRight','ArrowLeft'];if(!keys.includes(event.key))return;event.preventDefault();const direction=event.key===keys[0]?1:-1;let next=index;do{next=(next+direction+items.value.length)%items.value.length}while(items.value[next]?.disabled&&next!==index);active.value=next;(event.currentTarget as HTMLElement).parentElement?.querySelectorAll<HTMLButtonElement>('button')[next]?.focus()}
+</script>
+<template><div class="uv-toggle-group" :class="`uv-toggle-group--${orientation}`" role="group" :aria-label="label"><button v-for="(option,index) in items" :key="option.value" type="button" :disabled="disabled||option.disabled" :aria-pressed="selected(option.value)" :tabindex="index===active?0:-1" @click="choose(option,index)" @keydown="move($event,index)">{{ option.label }}</button></div></template>
+<style>.uv-toggle-group{display:inline-flex;gap:.25rem;padding:.25rem;border:1px solid var(--uv-color-border,#cbd5e1);border-radius:var(--uv-radius-md,.625rem);background:#f8fafc;font:inherit}.uv-toggle-group--vertical{flex-direction:column}.uv-toggle-group button{border:0;border-radius:.45rem;padding:.55rem .75rem;background:transparent;color:#334155;font:600 .9rem/1 system-ui;cursor:pointer}.uv-toggle-group button[aria-pressed=true]{background:#fff;color:var(--uv-color-primary,#2563eb);box-shadow:0 1px 3px #0f172a22}.uv-toggle-group button:focus-visible{outline:2px solid var(--uv-color-primary,#2563eb)}.uv-toggle-group button:disabled{opacity:.45;cursor:not-allowed}</style>

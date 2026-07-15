@@ -1,0 +1,14 @@
+<script setup lang="ts">
+import { onBeforeUnmount, watch } from 'vue'
+import type { UvSidebarMode, UvSidebarPlacement, UvSidebarToggleDetail } from './sidebar.types'
+interface Props { modelValue?: boolean; label?: string; placement?: UvSidebarPlacement; mode?: UvSidebarMode; width?: string; closeOnEscape?: boolean; closeOnBackdrop?: boolean }
+const props=withDefaults(defineProps<Props>(),{modelValue:true,label:'Sidebar',placement:'left',mode:'static',width:'18rem',closeOnEscape:true,closeOnBackdrop:true})
+const emit=defineEmits<{ 'update:modelValue':[value:boolean]; toggle:[detail:UvSidebarToggleDetail]; close:[] }>()
+function setOpen(open:boolean){emit('update:modelValue',open);emit('toggle',{open});if(!open)emit('close')}
+function key(e:KeyboardEvent){if(props.mode==='overlay'&&props.modelValue&&props.closeOnEscape&&e.key==='Escape')setOpen(false)}
+watch(()=>props.modelValue,(open)=>{if(typeof document==='undefined')return;if(open&&props.mode==='overlay')document.addEventListener('keydown',key);else document.removeEventListener('keydown',key)},{immediate:true})
+onBeforeUnmount(()=>{if(typeof document!=='undefined')document.removeEventListener('keydown',key)})
+</script>
+<template><div class="uv-sidebar-shell" :class="[`uv-sidebar-shell--${mode}`,`uv-sidebar-shell--${placement}`,{'is-open':modelValue}]"><button v-if="mode==='overlay'&&modelValue" class="uv-sidebar__backdrop" type="button" aria-label="Close sidebar" @click="closeOnBackdrop&&setOpen(false)"></button><aside v-show="modelValue" class="uv-sidebar" :style="{width}" :aria-label="label"><header v-if="$slots.header" class="uv-sidebar__header"><slot name="header" /></header><nav class="uv-sidebar__body" :aria-label="label"><slot /></nav><footer v-if="$slots.footer" class="uv-sidebar__footer"><slot name="footer" /></footer></aside></div></template>
+<style>.uv-sidebar-shell{font:inherit}.uv-sidebar{box-sizing:border-box;display:grid;grid-template-rows:auto 1fr auto;min-height:12rem;max-width:100%;border-inline-end:1px solid var(--uv-color-border,#cbd5e1);background:var(--uv-color-surface,#fff);color:var(--uv-color-text,#0f172a)}.uv-sidebar-shell--right .uv-sidebar{border-inline-end:0;border-inline-start:1px solid var(--uv-color-border,#cbd5e1)}.uv-sidebar__header,.uv-sidebar__footer{padding:1rem;border-block-end:1px solid var(--uv-color-border,#cbd5e1)}.uv-sidebar__footer{border-block-start:1px solid var(--uv-color-border,#cbd5e1);border-block-end:0}.uv-sidebar__body{padding:.75rem;overflow:auto}.uv-sidebar-shell--overlay{position:fixed;inset:0;z-index:50;pointer-events:none}.uv-sidebar-shell--overlay.is-open{pointer-events:auto}.uv-sidebar-shell--overlay .uv-sidebar{position:absolute;inset-block:0;inset-inline-start:0;box-shadow:0 20px 50px rgb(15 23 42/.25)}.uv-sidebar-shell--overlay.uv-sidebar-shell--right .uv-sidebar{inset-inline-start:auto;inset-inline-end:0}.uv-sidebar__backdrop{position:absolute;inset:0;border:0;background:rgb(15 23 42/.45)}
+</style>

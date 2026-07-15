@@ -2,11 +2,13 @@ export interface ApiProp { name: string; type: string; default?: string; require
 export interface ApiEvent { name: string; payload: string; description: string }
 export interface ApiSlot { name: string; description: string }
 export interface CssVariable { name: string; default: string; description: string }
+export type ComponentCategory = 'Actions' | 'Forms' | 'Feedback' | 'Data display' | 'Navigation' | 'Overlays' | (string & {})
+
 export interface ComponentMetadata {
   name: string
   slug: string
   tagName: string
-  category: 'Actions' | 'Forms' | 'Feedback' | 'Data display' | 'Navigation' | 'Overlays'
+  category: ComponentCategory
   description: string
   status: 'alpha' | 'beta' | 'stable'
   versionIntroduced: string

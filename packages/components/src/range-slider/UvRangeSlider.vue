@@ -1,0 +1,19 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import type { UvRangeSliderDetail, UvRangeValue } from './range-slider.types'
+interface Props { modelValue?: UvRangeValue | number[]; valuesJson?: string; min?: number; max?: number; step?: number; label?: string; startLabel?: string; endLabel?: string; disabled?: boolean; showValues?: boolean; valuePrefix?: string; valueSuffix?: string }
+const props=withDefaults(defineProps<Props>(),{modelValue:undefined,valuesJson:'',min:0,max:100,step:1,label:'Range',startLabel:'Minimum',endLabel:'Maximum',disabled:false,showValues:true,valuePrefix:'',valueSuffix:''})
+const emit=defineEmits<{ 'update:modelValue':[value:UvRangeValue]; input:[detail:UvRangeSliderDetail]; change:[detail:UvRangeSliderDetail] }>()
+function jsonValue():number[]{try{const value=JSON.parse(props.valuesJson);return Array.isArray(value)?value:[]}catch{return[]}}
+const normalized=computed<UvRangeValue>(()=>{const raw=props.modelValue&&props.modelValue.length>=2?props.modelValue:jsonValue();const a=Number(raw[0]??props.min),b=Number(raw[1]??props.max);return [Math.max(props.min,Math.min(a,b,props.max)),Math.min(props.max,Math.max(a,b,props.min))]})
+const startPercent=computed(()=>((normalized.value[0]-props.min)/(props.max-props.min||1))*100)
+const endPercent=computed(()=>((normalized.value[1]-props.min)/(props.max-props.min||1))*100)
+function set(active:'start'|'end',raw:string,commit=false){const next=[...normalized.value] as UvRangeValue;const value=Number(raw);if(active==='start')next[0]=Math.min(value,next[1]);else next[1]=Math.max(value,next[0]);const detail={value:next,activeThumb:active};emit('update:modelValue',next);if(commit)emit('change',detail);else emit('input',detail)}
+function format(value:number){return `${props.valuePrefix}${value}${props.valueSuffix}`}
+</script>
+<template>
+  <fieldset class="uv-range-slider" :disabled="disabled"><legend>{{ label }}</legend><div v-if="showValues" class="uv-range-slider__values" aria-live="polite"><span>{{ startLabel }}: {{ format(normalized[0]) }}</span><span>{{ endLabel }}: {{ format(normalized[1]) }}</span></div><div class="uv-range-slider__track" :style="{'--uv-range-start':`${startPercent}%`,'--uv-range-end':`${endPercent}%`}"><input type="range" :min="min" :max="max" :step="step" :value="normalized[0]" :aria-label="startLabel" @input="set('start',($event.target as HTMLInputElement).value)" @change="set('start',($event.target as HTMLInputElement).value,true)"><input type="range" :min="min" :max="max" :step="step" :value="normalized[1]" :aria-label="endLabel" @input="set('end',($event.target as HTMLInputElement).value)" @change="set('end',($event.target as HTMLInputElement).value,true)"></div></fieldset>
+</template>
+<style>
+.uv-range-slider{display:grid;gap:.65rem;margin:0;padding:0;border:0;font:inherit;color:var(--uv-color-text,#0f172a)}.uv-range-slider legend{font-weight:600}.uv-range-slider__values{display:flex;justify-content:space-between;gap:1rem;color:#64748b;font-size:.875rem}.uv-range-slider__track{position:relative;height:1.6rem;background:linear-gradient(to right,#e2e8f0 var(--uv-range-start),var(--uv-color-primary,#2563eb) var(--uv-range-start),var(--uv-color-primary,#2563eb) var(--uv-range-end),#e2e8f0 var(--uv-range-end)) center/100% .35rem no-repeat}.uv-range-slider input{position:absolute;inset:0;width:100%;height:100%;margin:0;background:transparent;pointer-events:none;appearance:none}.uv-range-slider input::-webkit-slider-thumb{width:1.15rem;height:1.15rem;border:2px solid #fff;border-radius:999px;background:var(--uv-color-primary,#2563eb);box-shadow:0 0 0 1px #94a3b8;pointer-events:auto;appearance:none}.uv-range-slider input::-moz-range-thumb{width:1rem;height:1rem;border:2px solid #fff;border-radius:999px;background:var(--uv-color-primary,#2563eb);pointer-events:auto}
+</style>

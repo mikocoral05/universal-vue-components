@@ -1,0 +1,48 @@
+Run from the repository root. Run each command separately and fix the first real failure before continuing.
+
+Environment
+pnpm --version
+node --version
+pnpm install --frozen-lockfile
+pnpm exec playwright install chromium
+
+Repository integrity
+git status --short
+git diff --check
+pnpm validate:workspace
+pnpm validate:metadata
+
+Packages and static checks
+pnpm build:packages
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm validate:exports
+
+Website and examples
+pnpm build:website
+pnpm build:examples
+
+Browser, accessibility, and packed-consumer validation
+pnpm test:e2e
+pnpm test:a11y
+pnpm test:packed
+
+Generated output validation
+pnpm validate:links
+pnpm validate:sizes
+
+Final aggregate gate
+pnpm check
+pnpm build
+pnpm test:e2e
+pnpm test:a11y
+pnpm test:packed
+pnpm validate:links
+pnpm validate:sizes
+git diff --check
+git status --short
+
+Optional visual regression
+$env:VISUAL_REGRESSION = "1"
+pnpm test:visual

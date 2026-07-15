@@ -1,0 +1,17 @@
+<script setup lang="ts">
+import { computed, nextTick, ref } from 'vue'
+import type { UvMenubarDetail,UvMenubarItem,UvMenubarId } from './menubar.types'
+interface Props { items?:UvMenubarItem[]; itemsJson?:string; label?:string }
+const props=withDefaults(defineProps<Props>(),{items:()=>[],itemsJson:'',label:'Application menu'})
+const emit=defineEmits<{ select:[detail:UvMenubarDetail] }>()
+const open=ref<UvMenubarId|null>(null)
+const root=ref<HTMLElement|null>(null)
+function parse(){try{const v=JSON.parse(props.itemsJson);return Array.isArray(v)?v:[]}catch{return[]}}
+const list=computed<UvMenubarItem[]>(()=>props.items.length?props.items:parse())
+function toggle(item:UvMenubarItem){if(item.disabled)return;open.value=open.value===item.id?null:item.id;nextTick(()=>root.value?.querySelector<HTMLButtonElement>('[role=menuitem]')?.focus())}
+function choose(item:UvMenubarItem){if(item.disabled)return;emit('select',{id:item.id,item});open.value=null}
+function barKey(event:KeyboardEvent,index:number){const buttons=[...root.value?.querySelectorAll<HTMLButtonElement>('[role=menuitem][aria-haspopup]')||[]];if(event.key==='ArrowRight'||event.key==='ArrowLeft'){event.preventDefault();buttons[(index+(event.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length]?.focus()}else if(event.key==='ArrowDown'){event.preventDefault();toggle(list.value[index])}else if(event.key==='Escape')open.value=null}
+function menuKey(event:KeyboardEvent){const buttons=[...root.value?.querySelectorAll<HTMLButtonElement>('.uv-menubar__menu [role=menuitem]:not(:disabled)')||[]];const i=buttons.indexOf(event.target as HTMLButtonElement);if(event.key==='ArrowDown'){event.preventDefault();buttons[(i+1)%buttons.length]?.focus()}else if(event.key==='ArrowUp'){event.preventDefault();buttons[(i-1+buttons.length)%buttons.length]?.focus()}else if(event.key==='Escape'){event.preventDefault();open.value=null}}
+</script>
+<template><div ref="root" class="uv-menubar" role="menubar" :aria-label="label"><div v-for="(item,index) in list" :key="item.id" class="uv-menubar__root"><button type="button" role="menuitem" aria-haspopup="menu" :aria-expanded="open===item.id" :disabled="item.disabled" @click="toggle(item)" @keydown="barKey($event,index)">{{ item.label }}</button><div v-if="open===item.id" class="uv-menubar__menu" role="menu" :aria-label="item.label" @keydown="menuKey"><button v-for="child in item.children||[]" :key="child.id" type="button" role="menuitem" :disabled="child.disabled" @click="choose(child)"><span>{{ child.label }}</span><kbd v-if="child.shortcut">{{ child.shortcut }}</kbd></button></div></div></div></template>
+<style>.uv-menubar{display:flex;gap:.15rem;padding:.25rem;border:1px solid var(--uv-color-border,#cbd5e1);border-radius:var(--uv-radius-md,.625rem);background:#fff;font:inherit}.uv-menubar__root{position:relative}.uv-menubar [role=menuitem]{border:0;border-radius:.4rem;padding:.55rem .7rem;background:transparent;color:#334155;font:inherit;cursor:pointer}.uv-menubar [role=menuitem]:hover,.uv-menubar [role=menuitem]:focus{background:#f1f5f9;outline:0}.uv-menubar__menu{position:absolute;z-index:25;top:calc(100% + .35rem);left:0;display:grid;min-width:13rem;padding:.3rem;border:1px solid var(--uv-color-border,#cbd5e1);border-radius:.55rem;background:#fff;box-shadow:0 14px 35px #0f172a22}.uv-menubar__menu button{display:flex;justify-content:space-between;gap:1rem;text-align:left}.uv-menubar kbd{color:#64748b;font:inherit}.uv-menubar :disabled{opacity:.45;cursor:not-allowed}</style>

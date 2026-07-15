@@ -1,0 +1,14 @@
+<script setup lang="ts">
+import { computed, ref } from 'vue'
+import type { UvSegmentedDetail,UvSegmentedOption,UvSegmentedValue } from './segmented-control.types'
+interface Props { modelValue?:UvSegmentedValue; options?:UvSegmentedOption[]; optionsJson?:string; label?:string; disabled?:boolean; fullWidth?:boolean; name?:string }
+const props=withDefaults(defineProps<Props>(),{modelValue:undefined,options:()=>[],optionsJson:'',label:'Select an option',disabled:false,fullWidth:false,name:''})
+const emit=defineEmits<{ 'update:modelValue':[value:UvSegmentedValue]; change:[detail:UvSegmentedDetail] }>()
+function parse(){try{const v=JSON.parse(props.optionsJson);return Array.isArray(v)?v:[]}catch{return[]}}
+const items=computed<UvSegmentedOption[]>(()=>props.options.length?props.options:parse())
+const focusIndex=ref(Math.max(0,items.value.findIndex(i=>i.value===props.modelValue)))
+function choose(option:UvSegmentedOption,index:number){if(props.disabled||option.disabled)return;focusIndex.value=index;emit('update:modelValue',option.value);emit('change',{value:option.value,option})}
+function key(event:KeyboardEvent,index:number){if(!['ArrowRight','ArrowLeft','Home','End'].includes(event.key))return;event.preventDefault();let next=event.key==='Home'?0:event.key==='End'?items.value.length-1:index+(event.key==='ArrowRight'?1:-1);next=(next+items.value.length)%items.value.length;while(items.value[next]?.disabled)next=(next+(event.key==='ArrowLeft'?-1:1)+items.value.length)%items.value.length;focusIndex.value=next;const button=(event.currentTarget as HTMLElement).parentElement?.querySelectorAll<HTMLButtonElement>('button')[next];button?.focus();if(button)choose(items.value[next],next)}
+</script>
+<template><div class="uv-segmented" :class="{'uv-segmented--full':fullWidth}" role="radiogroup" :aria-label="label"><button v-for="(option,index) in items" :key="option.value" type="button" role="radio" :aria-checked="modelValue===option.value" :aria-label="option.description?`${option.label}: ${option.description}`:option.label" :disabled="disabled||option.disabled" :tabindex="index===focusIndex?0:-1" @click="choose(option,index)" @keydown="key($event,index)">{{ option.label }}</button><input v-if="name" type="hidden" :name="name" :value="modelValue"></div></template>
+<style>.uv-segmented{display:inline-grid;grid-auto-flow:column;grid-auto-columns:1fr;padding:.25rem;border-radius:var(--uv-radius-md,.625rem);background:#e2e8f0;font:inherit}.uv-segmented--full{display:grid;width:100%}.uv-segmented button{border:0;border-radius:.45rem;padding:.6rem .8rem;background:transparent;color:#475569;font:600 .9rem/1 system-ui;cursor:pointer}.uv-segmented button[aria-checked=true]{background:#fff;color:#0f172a;box-shadow:0 1px 3px #0f172a22}.uv-segmented button:focus-visible{outline:2px solid var(--uv-color-primary,#2563eb)}.uv-segmented button:disabled{opacity:.45;cursor:not-allowed}</style>

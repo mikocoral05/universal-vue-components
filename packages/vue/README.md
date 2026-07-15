@@ -16,18 +16,19 @@ Components may also be imported individually for tree shaking:
 
 ```vue
 <script setup lang="ts">
-import { UvDivider, UvDropdownMenu, UvSlider } from '@universal-vue/vue'
 import { ref } from 'vue'
+import { UvCommandPalette, UvFormField, UvStepper, UvTimeline } from '@universal-vue/vue'
 
-const coverage = ref(72)
-const menuOpen = ref(false)
+const step = ref('integrate')
+const steps = [{ id: 'install', label: 'Install' }, { id: 'integrate', label: 'Integrate' }]
+const commands = [{ id: 'docs', label: 'Open documentation' }]
+const timeline = [{ id: 1, title: 'Package connected', status: 'success' }]
 </script>
 
 <template>
-  <UvSlider v-model="coverage" label="Coverage" value-suffix="%" show-value />
-  <UvDivider label="Actions" />
-  <UvDropdownMenu v-model="menuOpen" label="More actions">
-    <button type="button" role="menuitem">Preview</button>
-  </UvDropdownMenu>
+  <UvFormField v-slot="slot" label="Repository URL"><input :id="slot.controlId"></UvFormField>
+  <UvStepper v-model="step" :steps="steps" />
+  <UvCommandPalette mode="inline" :commands="commands" />
+  <UvTimeline :items="timeline" />
 </template>
 ```

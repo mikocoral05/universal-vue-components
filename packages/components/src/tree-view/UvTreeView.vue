@@ -1,0 +1,17 @@
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue'
+import type { UvTreeNode,UvTreeNodeId,UvTreeSelectionDetail,UvTreeToggleDetail } from './tree-view.types'
+import { UvTreeBranch } from './UvTreeBranch'
+interface Props { nodes?: UvTreeNode[]; nodesJson?: string; modelValue?: UvTreeNodeId|null; expanded?: UvTreeNodeId[]; expandedJson?: string; label?: string }
+const props=withDefaults(defineProps<Props>(),{nodes:()=>[],nodesJson:'',modelValue:null,expanded:()=>[],expandedJson:'',label:'Tree view'})
+const emit=defineEmits<{ 'update:modelValue':[value:UvTreeNodeId|null]; 'update:expanded':[value:UvTreeNodeId[]]; select:[detail:UvTreeSelectionDetail]; toggle:[detail:UvTreeToggleDetail] }>()
+function arr<T>(s:string):T[]{try{const v=JSON.parse(s);return Array.isArray(v)?v:[]}catch{return[]}}
+const normalized=computed(()=>props.nodes.length?props.nodes:arr<UvTreeNode>(props.nodesJson))
+const open=ref<UvTreeNodeId[]>(props.expanded.length?props.expanded:arr<UvTreeNodeId>(props.expandedJson));watch(()=>props.expanded,v=>{if(v.length)open.value=[...v]})
+function isOpen(id:UvTreeNodeId){return open.value.includes(id)}
+function toggle(node:UvTreeNode){if(!node.children?.length||node.disabled)return;open.value=isOpen(node.id)?open.value.filter(x=>x!==node.id):[...open.value,node.id];emit('update:expanded',[...open.value]);emit('toggle',{id:node.id,node,expanded:isOpen(node.id)})}
+function select(node:UvTreeNode){if(node.disabled)return;emit('update:modelValue',node.id);emit('select',{id:node.id,node})}
+function onKey(e:KeyboardEvent,node:UvTreeNode){if(e.key==='Enter'||e.key===' '){e.preventDefault();select(node)}else if(e.key==='ArrowRight'&&node.children?.length&&!isOpen(node.id)){e.preventDefault();toggle(node)}else if(e.key==='ArrowLeft'&&isOpen(node.id)){e.preventDefault();toggle(node)}}
+</script>
+<template><ul class="uv-tree" role="tree" :aria-label="label"><template v-for="node in normalized" :key="String(node.id)"><li role="treeitem" :aria-expanded="node.children?.length ? isOpen(node.id) : undefined" :aria-selected="modelValue===node.id" :aria-disabled="node.disabled||undefined"><div class="uv-tree__row"><button v-if="node.children?.length" type="button" class="uv-tree__toggle" :aria-label="`${isOpen(node.id)?'Collapse':'Expand'} ${node.label}`" @click="toggle(node)">{{ isOpen(node.id)?'−':'+' }}</button><span v-else class="uv-tree__spacer"></span><button type="button" class="uv-tree__label" :disabled="node.disabled" @click="select(node)" @keydown="onKey($event,node)"><slot name="node" :node="node">{{ node.label }}</slot></button></div><UvTreeBranch v-if="node.children?.length&&isOpen(node.id)" :nodes="node.children" :selected="modelValue" @select="select" @toggle="toggle" /></li></template></ul></template>
+<style>.uv-tree,.uv-tree__group{list-style:none;margin:0;padding:0;font:inherit;color:var(--uv-color-text,#0f172a)}.uv-tree__group{padding-inline-start:1.25rem}.uv-tree__row{display:flex;align-items:center;gap:.25rem}.uv-tree__toggle,.uv-tree__label,.uv-tree__group button{border:0;background:transparent;font:inherit;color:inherit;cursor:pointer;border-radius:.35rem;padding:.4rem .5rem}.uv-tree__label{flex:1;text-align:start}.uv-tree [aria-selected=true]>.uv-tree__row .uv-tree__label,.uv-tree__group [aria-selected=true]>button{background:#dbeafe;color:#1d4ed8}.uv-tree__toggle,.uv-tree__spacer{width:2rem}.uv-tree button:focus-visible{outline:2px solid var(--uv-color-primary,#2563eb);outline-offset:1px}</style>
